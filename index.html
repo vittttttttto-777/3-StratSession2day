@@ -929,16 +929,21 @@ h3 em.acc{font-size:1.08em;}
 .tb-cv{position:relative; margin:18px;}
 .tb-w{position:absolute; inset:0; overflow:visible;}
 .tb-w path{fill:none; stroke:var(--cc-sage); stroke-width:1.3;}
-.tb-n{position:absolute; width:168px; height:88px; background:var(--cc-mist); border-top:3px solid var(--cc-sage); padding:7px 9px; display:flex; flex-direction:column; gap:3px; cursor:pointer; text-align:left; font:inherit; color:var(--cc-deep-teal); border-left:0; border-right:0; border-bottom:0;}
+.tb-n{position:absolute; width:176px; height:104px; background:var(--cc-mist); border-top:3px solid var(--cc-sage); padding:7px 9px; display:flex; flex-direction:column; gap:3px; cursor:pointer; text-align:left; font:inherit; color:var(--cc-deep-teal); border-left:0; border-right:0; border-bottom:0;}
 .tb-n.b{border-top-color:var(--cc-deep-teal);} .tb-n.o{border-top-color:var(--cc-green-2);}
 .tb-n.root{background:var(--cc-deep-teal); color:var(--cc-mist);}
 .tb-n.sel{box-shadow:0 0 0 2px #0097A7;}
 .tb-n .tn-t{font-size:11px; line-height:1.2; font-weight:500; max-height:2.4em; overflow:hidden;}
 .tb-n .tn-v{font-size:20px; font-weight:300; letter-spacing:-.01em; font-variant-numeric:tabular-nums; line-height:1;}
-.tb-n .tn-f{padding-right:40px; font-size:10px; color:var(--cc-sage); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.tb-n .tn-f{padding-right:0; font-size:10px; color:var(--cc-sage); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .tb-n.root .tn-f{color:#9FC1C0;}
 .tb-n.leaf{background:#F2F9FA; outline:1.5px solid #0097A7; outline-offset:-1.5px;}
-.tb-n .tn-o{position:absolute; bottom:6px; right:6px; font-size:9.5px; font-weight:600; padding:2px 6px; background:var(--cc-white); border:1px solid var(--cc-sage-soft); color:var(--cc-deep-teal); max-width:120px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.tb-n .tn-o{position:static; align-self:flex-start; margin-top:auto; font-size:9.5px; font-weight:600; padding:2px 6px; background:var(--cc-white); border:1px solid var(--cc-sage-soft); color:var(--cc-deep-teal); max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.tb-ft{display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:4px; vertical-align:1px; flex:none;}
+.tb-n .tn-o b{font-weight:700; color:#0097A7;}
+.tb-chips{display:flex; flex-wrap:wrap; gap:4px;}
+.tb-chip{display:inline-flex; align-items:center; gap:2px; font-size:max(11px,.85cqw); border:1px solid var(--cc-sage-soft); background:var(--cc-mist); padding:2px 2px 2px 7px;}
+.tb-chip button{border:none; background:none; cursor:pointer; color:var(--cc-sage); font-size:14px; line-height:1; padding:0 4px;}
 .tb-n .tn-s{position:absolute; top:-10px; left:-10px; width:20px; height:20px; border-radius:50%; background:#C9463D; color:#fff; font-size:13px; line-height:20px; text-align:center;}
 .tb-op{position:absolute; width:26px; height:26px; margin:-13px 0 0 -13px; border-radius:50%; background:var(--cc-white); border:1px solid var(--cc-sage); display:grid; place-items:center; font-size:15px; font-weight:600; color:var(--cc-deep-teal); z-index:2;}
 .tb-up{color:#1E8A57;} .tb-dn{color:#C2412D;}
@@ -2052,6 +2057,7 @@ try{ P.document.addEventListener(&#x27;deck:lang&#x27;,mode); }catch(_){}
     <div class="tb-seg" role="group" id="tb-tpl"></div>
     <span class="tb-sp"></span>
     <button type="button" class="tb-btn" id="tb-copy"></button>
+    <button type="button" class="tb-btn tb-pri" id="tb-xls"></button>
     <button type="button" class="tb-btn" id="tb-exp"></button>
     <button type="button" class="tb-btn" id="tb-imp"></button>
     <button type="button" class="tb-btn tb-pri" id="tb-full"></button>
@@ -2347,7 +2353,7 @@ try{ P.document.addEventListener(&#x27;deck:lang&#x27;,mode); }catch(_){}
         impLbl:'Вставьте JSON, экспортированный из конструктора',impGo:'Загрузить',impX:'Закрыть',impOk:'Дерево загружено',impErr:'Не удалось прочитать JSON. Проверьте, что вставлен весь текст экспорта.',
         lib:'Библиотека метрик',q:'Поиск метрики',gB:'Бизнес-метрики',gO:'Операционные метрики',b:'бизнес',o:'опер.',
         newPh:'Своя метрика',newB:'+ как бизнес',newO:'+ как опер.',sum:'Рост итога',
-        sel:'Выбрана метрика',name:'Название',kind:'Тип',owner:'Функция-владелец',ownerPh:'например, ДПД',
+        sel:'Выбрана метрика',name:'Название',kind:'Тип',owner:'Функция-владелец',ownerPh:'например, ДПД',ownerSel:'— выберите из справочника —',infl:'Влияют на метрику',inflAdd:'+ функция, которая влияет',inflNone:'пока никто не отмечен',legacy:'Было записано текстом',legacyHint:'выберите функцию из справочника, чтобы связать',noDict:'Справочник функций недоступен — владелец вводится текстом',xls:'Скачать Excel',xlsBusy:'Готовлю Excel…',xlsOk:'Файл Excel скачан',xlsErr:'Не удалось собрать Excel',types:{income:'Центр дохода',service:'Центр сервиса',expert:'Центр экспертизы'},
         formula:'Формула для дочерних',mul:'× произведение',add:'+ сумма',growth:'Рост, %',sign:'Роль в формуле родителя',
         plus:'+ прибавить',minus:'− вычесть',mulS:'× умножить',div:'÷ разделить',
         addChild:'+ дочерняя',del:'Удалить ветку',rootNo:'Корень дерева удалить нельзя',
@@ -2359,7 +2365,7 @@ try{ P.document.addEventListener(&#x27;deck:lang&#x27;,mode); }catch(_){}
         impLbl:'Paste JSON exported from the builder',impGo:'Load',impX:'Close',impOk:'Tree loaded',impErr:'Could not read the JSON. Check that the whole export text is pasted.',
         lib:'Metric library',q:'Search metrics',gB:'Business metrics',gO:'Operational metrics',b:'business',o:'oper.',
         newPh:'Custom metric',newB:'+ as business',newO:'+ as oper.',sum:'Outcome growth',
-        sel:'Selected metric',name:'Name',kind:'Type',owner:'Owning function',ownerPh:'e.g. DSD',
+        sel:'Selected metric',name:'Name',kind:'Type',owner:'Owning function',ownerPh:'e.g. DSD',ownerSel:'— pick from the directory —',infl:'Functions that influence it',inflAdd:'+ influencing function',inflNone:'none marked yet',legacy:'Previously typed as text',legacyHint:'pick a function from the directory to link it',noDict:'Function directory unavailable — type the owner as text',xls:'Download Excel',xlsBusy:'Building Excel…',xlsOk:'Excel file downloaded',xlsErr:'Could not build the Excel file',types:{income:'Revenue center',service:'Service center',expert:'Expertise center'},
         formula:'Formula for children',mul:'× product',add:'+ sum',growth:'Growth, %',sign:'Role in parent formula',
         plus:'+ add',minus:'− subtract',mulS:'× multiply',div:'÷ divide',
         addChild:'+ child',del:'Delete branch',rootNo:'The root cannot be deleted',
@@ -2383,7 +2389,7 @@ try{ P.document.addEventListener(&#x27;deck:lang&#x27;,mode); }catch(_){}
     ['o','Time-to-fill вакансии','Time-to-fill'],['o','Точность расчёта комиссий','Commission accuracy'],['o','Выплаты в срок','On-time payouts']
   ];
   var uid=1; function nid(){ return 'n'+(uid++)+Math.random().toString(36).slice(2,5); }
-  function mk(k,ru,en,extra){ var o={id:nid(),k:k,n:ru,ne:en||ru,op:'mul',g:0,sg:1,own:'',c:[]}; for(var x in extra) o[x]=extra[x]; return o; }
+  function mk(k,ru,en,extra){ var o={id:nid(),k:k,n:ru,ne:en||ru,op:'mul',g:0,sg:1,own:'',fo:'',fi:[],c:[]}; for(var x in extra) o[x]=extra[x]; return o; }
   function elena(){
     var L=function(ru,en,g,o){ return mk('b',ru,en,Object.assign({g:g},o||{})); };
     return mk('b','Продажи','Sales',{own:'ДПД',c:[
@@ -2405,6 +2411,16 @@ try{ P.document.addEventListener(&#x27;deck:lang&#x27;,mode); }catch(_){}
   var slot='local'; try{ var ss=localStorage.getItem('d2-tb-slot'); if(ss&&(ss==='local'||SLOTS.indexOf(ss)>-1)) slot=ss; }catch(_){}
   var S3=window.strat3||null, sb=S3&&S3.sb, isEditor=false, lastEdit=0, saveT=null, stKey='stLocal', stTime='';
   if(S3&&S3.editorP) S3.editorP.then(function(v){ isEditor=!!v; drawSlot(); });
+  /* Справочник функций из дня 1 (vs_functions): владелец метрики и функции, которые на неё влияют */
+  var FNS=[], FNMAP={}, FTYPE_C={income:'#20927B',service:'#C1905C',expert:'#B8325A'};
+  var OWN_ALIAS={'ДПД':'distr','МК':'mkt','EC':'ecom','ЕС':'ecom'};
+  function fnm(id){ var f=FNMAP[id]; if(!f) return ''; return lang()==='en'&&f.name_en?f.name_en:f.name; }
+  function linkLegacy(n){ walk(n,function(x){ if(!x.fi) x.fi=[]; if(!x.fo&&x.own){ var a=OWN_ALIAS[x.own.trim()]; var hit=a&&FNMAP[a]?a:''; if(!hit) FNS.forEach(function(f){ if(!hit&&f.name.toLowerCase()===x.own.trim().toLowerCase()) hit=f.id; }); if(hit){ x.fo=hit; } } }); }
+  function loadFns(){ if(!sb) return; sb.from('vs_functions').select('id,name,name_en,grp,sort,active,fn_type').eq('active',true).order('sort').then(function(r){
+      if(r.error||!r.data) return; FNS=r.data; FNMAP={}; FNS.forEach(function(f){ FNMAP[f.id]=f; }); linkLegacy(tree); drawAll(); },function(){}); }
+  function fnOpts(cur,skip){ var h='', g=null; FNS.forEach(function(f){ if(skip&&skip.indexOf(f.id)>-1) return; if(f.grp!==g){ if(g!==null) h+='</optgroup>'; g=f.grp; h+='<optgroup label="'+esc(g)+'">'; } h+='<option value="'+f.id+'"'+(f.id===cur?' selected':'')+'>'+esc(lang()==='en'&&f.name_en?f.name_en:f.name)+'</option>'; }); return h+(g!==null?'</optgroup>':''); }
+  function ownerLabel(n){ return n.fo&&FNMAP[n.fo]?fnm(n.fo):(n.own||''); }
+  function dot(id){ var f=FNMAP[id]; return f&&f.fn_type?'<i class="tb-ft" style="background:'+FTYPE_C[f.fn_type]+'" title="'+esc(t('types')[f.fn_type])+'"></i>':''; }
   function canWrite(){ return slot!=='local' && sb && (slot!=='CCI' || isEditor); }
   function status(k,cls){ stKey=k; var e=document.getElementById('tb-st'); if(!e) return; e.textContent=t(k)+(k==='stSaved'&&stTime?' · '+stTime:''); e.className='tb-st'+(cls?' '+cls:''); }
   function save(){ try{ localStorage.setItem(KEY, JSON.stringify({tree:tree,tpl:tpl})); }catch(_){}
@@ -2414,7 +2430,7 @@ try{ P.document.addEventListener(&#x27;deck:lang&#x27;,mode); }catch(_){}
     saveT=setTimeout(function(){ sb.rpc('strat3_tree_save',{p_slot:sl,p_tree:snap,p_pin:(S3.getPin&&S3.getPin())||null}).then(function(r){
       if(r.error){ status(/pin/i.test(r.error.message)?'stRO':'stErr','warn'); return; }
       var d=new Date(); stTime=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); status('stSaved','ok'); },function(){ status('stErr','warn'); }); },700); }
-  function applyRemote(tr){ if(!tr||!tr.id||!Array.isArray(tr.c)) return; if(JSON.stringify(tr)===JSON.stringify(tree)) return; tree=tr; tpl=''; if(!sel||!find(sel)) sel=tree.id; try{ localStorage.setItem(KEY, JSON.stringify({tree:tree,tpl:tpl})); }catch(_){} drawAll(); }
+  function applyRemote(tr){ if(!tr||!tr.id||!Array.isArray(tr.c)) return; if(JSON.stringify(tr)===JSON.stringify(tree)) return; tree=tr; linkLegacy(tree); tpl=''; if(!sel||!find(sel)) sel=tree.id; try{ localStorage.setItem(KEY, JSON.stringify({tree:tree,tpl:tpl})); }catch(_){} drawAll(); }
   function loadSlot(){
     if(slot==='local'){ status('stLocal'); return; }
     if(!sb){ status('stErr','warn'); return; }
@@ -2444,7 +2460,7 @@ try{ P.document.addEventListener(&#x27;deck:lang&#x27;,mode); }catch(_){}
   function ftxt(n){ if(!n.c||!n.c.length) return ''; return n.c.map(function(c,i){ var s=sym(n,c,i===0); return (s?s+' ':'')+nm(c); }).join(' '); }
   function esc(s){ return String(s).replace(/[&<>"]/g,function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]; }); }
   var cv=document.getElementById('tb-cv'), wires=document.getElementById('tb-w'), ins=document.getElementById('tb-ins'), msg=document.getElementById('tb-msg');
-  var W=168,H=88,HG=18,VG=58;
+  var W=176,H=104,HG=18,VG=58;
   function flash(m){ msg.textContent=m||''; clearTimeout(flash.t); if(m) flash.t=setTimeout(function(){ msg.textContent=''; },3500); }
   function layout(){
     var pos={}, leaf=0, maxD=0;
@@ -2463,7 +2479,7 @@ try{ P.document.addEventListener(&#x27;deck:lang&#x27;,mode); }catch(_){}
       b.className='tb-n '+(n.k==='o'?'o':'b')+(n===tree?' root':'')+(isLeaf&&n!==tree?' leaf':'')+(sel===n.id?' sel':'');
       b.style.left=q.x+'px'; b.style.top=q.y+'px'; b.dataset.id=n.id;
       b.innerHTML='<span class="tn-t">'+esc(nm(n))+'</span><span class="tn-v '+cls(v)+'">'+pct(v)+'</span><span class="tn-f">'+(isLeaf?(n===tree?'':(lang()==='en'?'input':'ввод')):esc('= '+ftxt(n)))+'</span>'+
-        (n.own?'<span class="tn-o">'+esc(n.own)+'</span>':'')+(p&&n.sg<0?'<span class="tn-s">'+(p.op==='add'?'−':'÷')+'</span>':'');
+        ((ownerLabel(n)||(n.fi&&n.fi.length))?'<span class="tn-o" title="'+esc(ownerLabel(n)+((n.fi&&n.fi.length)?' · '+t('infl')+': '+n.fi.map(fnm).join(', '):''))+'">'+(n.fo?dot(n.fo):'')+esc(ownerLabel(n)||'—')+((n.fi&&n.fi.length)?' <b>+'+n.fi.length+'</b>':'')+'</span>':'')+(p&&n.sg<0?'<span class="tn-s">'+(p.op==='add'?'−':'÷')+'</span>':'');
       cv.appendChild(b);
       if(p){ var pp=P[p.id]; var px=pp.x+W/2, py=pp.y+H, cx=q.x+W/2, cy=q.y, my=cy-VG/2; d+='M'+px+','+py+'V'+my+'H'+cx+'V'+cy; }
       if(n.c&&n.c.length>1){ for(var i=1;i<n.c.length;i++){ var A=P[n.c[i-1].id], B=P[n.c[i].id]; var o=document.createElement('div'); o.className='tb-op';
@@ -2480,14 +2496,24 @@ try{ P.document.addEventListener(&#x27;deck:lang&#x27;,mode); }catch(_){}
     h+='<div class="tb-h">'+t('sel')+'</div>';
     h+='<label class="tb-f"><span>'+t('name')+'</span><input class="tb-in" id="tbi-name" value="'+esc(nm(n))+'"></label>';
     h+='<div class="tb-f"><span>'+t('kind')+'</span>'+seg('tbi-kind',[['b',t('gB')],['o',t('gO')]],n.k)+'</div>';
-    h+='<label class="tb-f"><span>'+t('owner')+'</span><input class="tb-in" id="tbi-own" value="'+esc(n.own||'')+'" placeholder="'+t('ownerPh')+'"></label>';
+    if(FNS.length){
+      h+='<label class="tb-f"><span>'+t('owner')+'</span><select class="tb-in" id="tbi-fo"><option value="">'+t('ownerSel')+'</option>'+fnOpts(n.fo)+'</select>'+(!n.fo&&n.own?'<span class="tb-hint">'+t('legacy')+': <b>'+esc(n.own)+'</b> — '+t('legacyHint')+'</span>':'')+'</label>';
+      var fi=n.fi||[];
+      h+='<div class="tb-f"><span>'+t('infl')+'</span><div class="tb-chips">'+(fi.length?fi.map(function(id){ return '<span class="tb-chip">'+dot(id)+esc(fnm(id)||id)+'<button type="button" data-rmfi="'+id+'" aria-label="×">×</button></span>'; }).join(''):'<span class="tb-hint">'+t('inflNone')+'</span>')+'</div>'+
+         '<select class="tb-in" id="tbi-fi"><option value="">'+t('inflAdd')+'</option>'+fnOpts('',fi.concat(n.fo?[n.fo]:[]))+'</select></div>';
+    } else {
+      h+='<label class="tb-f"><span>'+t('owner')+'</span><input class="tb-in" id="tbi-own" value="'+esc(n.own||'')+'" placeholder="'+t('ownerPh')+'">'+(sb?'':'<span class="tb-hint">'+t('noDict')+'</span>')+'</label>';
+    }
     if(!isLeaf){ h+='<div class="tb-f"><span>'+t('formula')+'</span>'+seg('tbi-op',[['mul',t('mul')],['add',t('add')]],n.op)+'<div class="tb-fm">'+esc(nm(n))+' = '+esc(ftxt(n))+'</div></div>'; }
     else if(n!==tree||true){ h+='<div class="tb-f"><span>'+t('growth')+'</span><div class="tb-step"><button type="button" data-d="-0.5">−</button><input class="tb-in" id="tbi-g" inputmode="decimal" value="'+String(+n.g).replace('.',lang()==='ru'?',':'.')+'"><button type="button" data-d="0.5">+</button></div><p class="tb-hint">'+t('leafHint')+'</p></div>'; }
     if(p){ h+='<div class="tb-f"><span>'+t('sign')+'</span>'+seg('tbi-sg',p.op==='add'?[['1',t('plus')],['-1',t('minus')]]:[['1',t('mulS')],['-1',t('div')]],String(n.sg<0?-1:1))+'</div>'; }
     h+='<div class="tb-row"><button type="button" class="tb-btn" id="tbi-child">'+t('addChild')+'</button>'+(p?'<button type="button" class="tb-btn tb-del" id="tbi-del">'+t('del')+'</button>':'')+'</div>';
     ins.innerHTML=h;
     var ni=document.getElementById('tbi-name'); ni.addEventListener('input',function(){ if(lang()==='en') n.ne=ni.value; else n.n=ni.value; if(!n.ne) n.ne=ni.value; if(!n.n) n.n=ni.value; save(); drawCanvas(); });
-    document.getElementById('tbi-own').addEventListener('input',function(e){ n.own=e.target.value; save(); drawCanvas(); });
+    var oi=document.getElementById('tbi-own'); if(oi) oi.addEventListener('input',function(e){ n.own=e.target.value; save(); drawCanvas(); });
+    var fo=document.getElementById('tbi-fo'); if(fo) fo.addEventListener('change',function(){ n.fo=fo.value; if(fo.value){ n.own=FNMAP[fo.value].name; n.fi=(n.fi||[]).filter(function(x){ return x!==fo.value; }); } save(); drawAll(); });
+    var fs=document.getElementById('tbi-fi'); if(fs) fs.addEventListener('change',function(){ if(!fs.value) return; n.fi=(n.fi||[]).concat([fs.value]); save(); drawAll(); });
+    Array.prototype.forEach.call(ins.querySelectorAll('[data-rmfi]'),function(b){ b.addEventListener('click',function(){ n.fi=(n.fi||[]).filter(function(x){ return x!==b.dataset.rmfi; }); save(); drawAll(); }); });
     bindSeg('tbi-kind',function(v){ n.k=v; });
     bindSeg('tbi-op',function(v){ n.op=v; });
     bindSeg('tbi-sg',function(v){ n.sg=+v; });
@@ -2512,7 +2538,7 @@ try{ P.document.addEventListener(&#x27;deck:lang&#x27;,mode); }catch(_){}
   function addMetric(k,ru,en){ var target=(sel&&find(sel))?find(sel).n:tree; var c=mk(k,ru,en); target.c.push(c); tpl=''; save(); drawAll(); flash(t('added')+': '+nm(c)+' → '+nm(target)); }
   function drawTpl(){ var g=document.getElementById('tb-tpl'); g.innerHTML=[['elena',t('tplElena')],['empty',t('tplEmpty')]].map(function(o){ return '<button type="button" data-v="'+o[0]+'" aria-pressed="'+(tpl===o[0])+'">'+o[1]+'</button>'; }).join(''); }
   function texts(){
-    document.getElementById('tb-copy').textContent=t('copy'); document.getElementById('tb-exp').textContent=t('exp'); document.getElementById('tb-imp').textContent=t('imp'); document.getElementById('tb-full').textContent=t('full');
+    document.getElementById('tb-xls').textContent=t('xls'); document.getElementById('tb-copy').textContent=t('copy'); document.getElementById('tb-exp').textContent=t('exp'); document.getElementById('tb-imp').textContent=t('imp'); document.getElementById('tb-full').textContent=t('full');
     document.getElementById('tb-implbl').textContent=t('impLbl'); document.getElementById('tb-impgo').textContent=t('impGo'); document.getElementById('tb-impx').textContent=t('impX');
     document.getElementById('tb-libh').textContent=t('lib'); document.getElementById('tb-q').placeholder=t('q'); document.getElementById('tb-newn').placeholder=t('newPh');
     document.getElementById('tb-newb').textContent=t('newB'); document.getElementById('tb-newo').textContent=t('newO');
@@ -2526,8 +2552,8 @@ try{ P.document.addEventListener(&#x27;deck:lang&#x27;,mode); }catch(_){}
   document.getElementById('tb-newo').addEventListener('click',function(){ addOwn('o'); });
   document.getElementById('tb-newn').addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); addOwn('b'); } });
   document.getElementById('tb-slot').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; slot=b.dataset.v; try{ localStorage.setItem('d2-tb-slot',slot); }catch(_){} drawSlot(); loadSlot(); });
-  document.getElementById('tb-tpl').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; tpl=b.dataset.v; tree= tpl==='elena'?elena():empty(); sel=tree.id; save(); drawAll(); });
-  function outline(){ var out=[]; (function o(n,d){ var s=new Array(d+1).join('   ')+(d?'└ ':'')+nm(n)+'  '+pct(val(n))+(n.own?'  ['+n.own+']':''); if(n.c&&n.c.length) s+='  = '+ftxt(n); out.push(s); (n.c||[]).forEach(function(c){ o(c,d+1); }); })(tree,0); return out.join('\n'); }
+  document.getElementById('tb-tpl').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; tpl=b.dataset.v; tree= tpl==='elena'?elena():empty(); linkLegacy(tree); sel=tree.id; save(); drawAll(); });
+  function outline(){ var out=[]; (function o(n,d){ var s=new Array(d+1).join('   ')+(d?'└ ':'')+nm(n)+'  '+pct(val(n))+(ownerLabel(n)?'  ['+ownerLabel(n)+']':'')+((n.fi&&n.fi.length)?'  {'+n.fi.map(fnm).join(', ')+'}':''); if(n.c&&n.c.length) s+='  = '+ftxt(n); out.push(s); (n.c||[]).forEach(function(c){ o(c,d+1); }); })(tree,0); return out.join('\n'); }
   function copyText(txt){
     var done=function(){ flash(t('copied')); }, fail=function(){ var box=document.getElementById('tb-impbox'), ta=document.getElementById('tb-imptxt'); box.hidden=false; ta.value=txt; ta.focus(); ta.select(); flash(t('copyFail')); };
     try{ navigator.clipboard.writeText(txt).then(done,fail); }catch(_){ fail(); }
@@ -2537,12 +2563,83 @@ try{ P.document.addEventListener(&#x27;deck:lang&#x27;,mode); }catch(_){}
   document.getElementById('tb-imp').addEventListener('click',function(){ var b=document.getElementById('tb-impbox'); b.hidden=!b.hidden; if(!b.hidden) document.getElementById('tb-imptxt').focus(); });
   document.getElementById('tb-impx').addEventListener('click',function(){ document.getElementById('tb-impbox').hidden=true; document.getElementById('tb-impmsg').textContent=''; });
   document.getElementById('tb-impgo').addEventListener('click',function(){ var m=document.getElementById('tb-impmsg');
-    try{ var o=JSON.parse(document.getElementById('tb-imptxt').value); var tr=o.tree||o; if(!tr||!tr.id||!Array.isArray(tr.c)) throw 0; tree=tr; tpl=''; sel=tree.id; save(); drawAll(); m.textContent=t('impOk'); }
+    try{ var o=JSON.parse(document.getElementById('tb-imptxt').value); var tr=o.tree||o; if(!tr||!tr.id||!Array.isArray(tr.c)) throw 0; tree=tr; linkLegacy(tree); tpl=''; sel=tree.id; save(); drawAll(); m.textContent=t('impOk'); }
     catch(_){ m.textContent=t('impErr'); } });
   document.getElementById('tb-full').addEventListener('click',function(){ try{ if(document.fullscreenElement) document.exitFullscreen(); else { var p=root.requestFullscreen&&root.requestFullscreen(); if(p&&p.catch) p.catch(function(){}); } }catch(_){} });
   root.addEventListener('keydown',function(e){ if(e.key==='ArrowLeft'||e.key==='ArrowRight'){ if(e.target.closest('input,textarea')) e.stopPropagation(); } },true);
   document.addEventListener('deck:lang',function(){ texts(); drawAll(); drawSlot(); });
-  sel=tree.id; texts(); drawAll(); drawSlot(); loadSlot();
+  /* ---------- Выгрузка дерева, метрик и владельцев в Excel ---------- */
+  var xlP=null;
+  function loadXL(){ if(window.ExcelJS) return Promise.resolve(window.ExcelJS); if(xlP) return xlP;
+    xlP=new Promise(function(res,rej){ var s=document.createElement('script'); s.src='vendor/exceljs.min.js'; s.onload=function(){ res(window.ExcelJS); }; s.onerror=function(){ xlP=null; rej(new Error('exceljs')); }; document.head.appendChild(s); }); return xlP; }
+  var XT={income:['Центр дохода','D6E9B4'],service:['Центр сервиса','FBE7C6'],expert:['Центр экспертизы','F6DCE4']};
+  function rowsOf(tr){ var out=[];
+    (function go(n,p,d,path){ var isLeaf=!n.c||!n.c.length; var nm0=n.n||n.ne||''; var pth=path?path+' › '+nm0:nm0; var f=n.fo&&FNMAP[n.fo];
+      out.push({lvl:d, name:nm0, kind:n.k==='o'?'операционная':'бизнес', formula:isLeaf?'':(n.op==='add'?'сумма: ':'произведение: ')+n.c.map(function(c,i){ var s0=n.op==='add'?(c.sg<0?'−':(i?'+':'')):(c.sg<0?'÷':(i?'×':'')); return (s0?s0+' ':'')+(c.n||c.ne); }).join(' '),
+        role:p?(p.op==='add'?(n.sg<0?'вычитается':'прибавляется'):(n.sg<0?'делитель':'множитель')):'итоговая метрика',
+        g:Math.round(valOf(n)*1000)/10, how:isLeaf?'ввод':'расчёт', owner:f?f.name:(n.own||''), linked:!!f, otype:f&&f.fn_type?f.fn_type:'', grp:f?f.grp:'',
+        infl:(n.fi||[]).map(function(id){ return FNMAP[id]?FNMAP[id].name:id; }), path:pth});
+      (n.c||[]).forEach(function(c){ go(c,n,d+1,pth); }); })(tr,null,0,'');
+    return out; }
+  function valOf(n){ return val(n); }
+  function head(ws,row){ row.eachCell(function(c){ c.font={bold:true,color:{argb:'FFFFFFFF'}}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF004643'}}; c.alignment={vertical:'middle',wrapText:true}; }); row.height=30; }
+  var TCOLS=[['Уровень',8],['Метрика',40],['Тип метрики',14],['Формула для дочерних',46],['Роль в формуле родителя',18],['Рост, %',10],['Рост: ввод / расчёт',12],['Функция-владелец',30],['Тип владельца (анкета)',18],['Группа владельца',26],['Влияют на метрику',44],['Путь в дереве',60]];
+  function putTree(ws,tr,slotName){
+    rowsOf(tr).forEach(function(r){
+      var vals=[r.lvl,r.name,r.kind,r.formula,r.role,r.g,r.how,r.owner,r.otype?XT[r.otype][0]:'',r.grp,r.infl.join('\n'),r.path]; if(slotName!=null) vals.unshift(slotName);
+      var row=ws.addRow(vals), o=slotName!=null?1:0;
+      row.alignment={vertical:'top',wrapText:true};
+      row.getCell(2+o).alignment={indent:Math.min(r.lvl*2,15),vertical:'top',wrapText:true};
+      if(r.lvl===0){ row.font={bold:true}; }
+      row.getCell(6+o).numFmt='+0.0"%";-0.0"%";0.0"%"';
+      if(r.how==='ввод') row.getCell(6+o).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFDEF1FF'}};
+      if(!r.owner) row.getCell(8+o).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFBE7C6'}};
+      else if(!r.linked) row.getCell(8+o).font={italic:true,color:{argb:'FFB8325A'}};
+      if(r.otype) row.getCell(9+o).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF'+XT[r.otype][1]}};
+    }); }
+  function slotTitle(sl){ return sl==='local'?t('local'):(sl==='CCI'?t('cci'):sl); }
+  async function exportXls(){
+    var X; flash(t('xlsBusy'));
+    try{ X=await loadXL(); }catch(_){ flash(t('xlsErr')); return; }
+    try{
+      var wb=new X.Workbook(); wb.creator='Coral Club · Стратсессия №3 · День 2'; var dt=new Date().toLocaleDateString('ru-RU');
+      // 1. текущее дерево
+      var ws=wb.addWorksheet('Дерево метрик',{views:[{state:'frozen',ySplit:3,xSplit:2}]});
+      ws.mergeCells(1,1,1,TCOLS.length); ws.getCell('A1').value='Дерево бизнес-метрик · '+slotTitle(slot)+' · выгрузка '+dt; ws.getCell('A1').font={bold:true,size:14,color:{argb:'FF004643'}};
+      ws.mergeCells(2,1,2,TCOLS.length); ws.getCell('A2').value='Рост итоговой метрики: '+pct(val(tree))+'. Голубым — рост, введённый у листьев; остальное пересчитано по формулам. Жёлтым — метрика без владельца, красным курсивом — владелец не из справочника функций.'; ws.getCell('A2').font={italic:true,color:{argb:'FF4F7472'}};
+      ws.columns=TCOLS.map(function(c){ return {width:c[1]}; }); ws.getRow(3).values=TCOLS.map(function(c){ return c[0]; }); head(ws,ws.getRow(3));
+      putTree(ws,tree,null); ws.autoFilter={from:{row:3,column:1},to:{row:3,column:TCOLS.length}};
+      // 2. все сохранённые деревья
+      var all=[]; if(sb){ try{ var r=await sb.from('strat3_trees').select('slot,tree,updated_at').order('slot'); if(!r.error&&r.data) all=r.data.filter(function(x){ return x.slot!=='elena'&&x.tree&&x.tree.id; }); }catch(_){} }
+      if(slot==='local') all.unshift({slot:'local',tree:tree});
+      var trees=all.length?all:[{slot:slot,tree:tree}];
+      if(all.some(function(x){ return x.slot!=='local'; })){
+        var wa=wb.addWorksheet('Все деревья',{views:[{state:'frozen',ySplit:1,xSplit:3}]});
+        var ac=[['Команда / дерево',18]].concat(TCOLS); wa.columns=ac.map(function(c){ return {width:c[1]}; }); wa.getRow(1).values=ac.map(function(c){ return c[0]; }); head(wa,wa.getRow(1));
+        all.forEach(function(x){ var FN=x.tree; linkLegacy(FN); putTree(wa,FN,slotTitle(x.slot)); });
+        wa.autoFilter={from:{row:1,column:1},to:{row:1,column:ac.length}};
+      }
+      // 3. функции × метрики (по всем деревьям)
+      var wf=wb.addWorksheet('Функции × метрики',{views:[{state:'frozen',ySplit:1,xSplit:1}]});
+      wf.columns=[{header:'Функция',width:36},{header:'Группа',width:28},{header:'Тип (анкета)',width:18},{header:'Владеет метриками, шт.',width:12},{header:'Владеет метриками',width:60},{header:'Влияет на метрики, шт.',width:12},{header:'Влияет на метрики',width:60}];
+      head(wf,wf.getRow(1));
+      var own={}, inf={};
+      trees.forEach(function(x){ walk2(x.tree,function(n){ var lbl=(n.n||n.ne)+(trees.length>1?' ['+slotTitle(x.slot)+']':''); if(n.fo) (own[n.fo]=own[n.fo]||[]).push(lbl); (n.fi||[]).forEach(function(id){ (inf[id]=inf[id]||[]).push(lbl); }); }); });
+      (FNS.length?FNS:[]).forEach(function(f){ var o=own[f.id]||[], i=inf[f.id]||[];
+        var row=wf.addRow([f.name,f.grp,f.fn_type?XT[f.fn_type][0]:'',o.length||'',o.join('\n'),i.length||'',i.join('\n')]); row.alignment={vertical:'top',wrapText:true};
+        if(f.fn_type) row.getCell(3).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF'+XT[f.fn_type][1]}};
+        if(f.fn_type==='income'&&!o.length) row.getCell(4).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFBE7C6'}}; });
+      wf.autoFilter={from:'A1',to:'G1'};
+      wb.eachSheet(function(w){ w.pageSetup={paperSize:9,orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0}; });
+      var buf=await wb.xlsx.writeBuffer();
+      var url=URL.createObjectURL(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
+      var a=document.createElement('a'); a.href=url; a.download='Дерево_метрик_'+(slot==='local'?'локальное':slot)+'_'+new Date().toISOString().slice(0,10)+'.xlsx'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(url); },2000);
+      flash(t('xlsOk'));
+    }catch(e){ console.error(e); flash(t('xlsErr')); }
+  }
+  function walk2(n,f){ f(n); (n.c||[]).forEach(function(c){ walk2(c,f); }); }
+  document.getElementById('tb-xls').addEventListener('click',exportXls);
+  sel=tree.id; texts(); drawAll(); drawSlot(); loadSlot(); loadFns();
 })();</script>
 </body>
 </html>
