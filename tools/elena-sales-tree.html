@@ -1,0 +1,446 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Дерево продаж Coral Club (Copy)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&display=swap">
+<style>
+:root{
+  --bg:#E5ECEC; --surface:#FFFFFF; --tint:#D3E0DF; --line:#9FBDBB; --line-soft:#BFD1D0;
+  --ink:#004643; --ink-2:#3E6664; --muted:#6F8D8B;
+  --brand:#004643; --on-brand:#FFFFFF; --edit:#0097A7; --edit-bg:#F2F9FA;
+  --up:#1E8A57; --down:#C2412D; --flat:#6F8D8B;
+  --up-bar:#4FA77A; --down-bar:#D9705C;
+  --font:"Onest","Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0A1F1E; --surface:#0F2E2C; --tint:#153B39; --line:#2F5856; --line-soft:#244846;
+    --ink:#E5ECEC; --ink-2:#B5CBCA; --muted:#83A09E;
+    --brand:#0E5A55; --on-brand:#FFFFFF; --edit:#3BC3D1; --edit-bg:#0C2A2C;
+    --up:#5CCB93; --down:#F0826E; --flat:#83A09E; --up-bar:#3E9B6C; --down-bar:#C9604D;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0A1F1E; --surface:#0F2E2C; --tint:#153B39; --line:#2F5856; --line-soft:#244846;
+  --ink:#E5ECEC; --ink-2:#B5CBCA; --muted:#83A09E;
+  --brand:#0E5A55; --on-brand:#FFFFFF; --edit:#3BC3D1; --edit-bg:#0C2A2C;
+  --up:#5CCB93; --down:#F0826E; --flat:#83A09E; --up-bar:#3E9B6C; --down-bar:#C9604D;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-weight:400;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+.shell{display:grid;grid-template-columns:44px 1fr;min-height:100%}
+.rail{border-right:1px solid var(--line-soft);display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding-block:24px}
+.rail .mark{writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.08em;color:var(--muted);font-weight:500;font-size:13px}
+.rail .pg{font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums}
+main{padding-block:28px 48px;padding-inline:clamp(16px,3vw,40px);min-width:0;display:flex;flex-direction:column;gap:28px;max-width:1240px}
+h1{font-weight:300;font-size:clamp(26px,3.4vw,38px);line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-weight:400;font-size:20px;margin:0;letter-spacing:-.005em}
+.lede{color:var(--ink-2);max-width:62ch;margin:10px 0 0;font-weight:300;font-size:15px}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+
+/* header controls */
+.head{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-end}
+.controls{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end}
+.ctl{display:flex;flex-direction:column;gap:6px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface)}
+.seg button{font:inherit;font-size:13px;border:0;background:transparent;color:var(--ink-2);padding:6px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--brand);color:var(--on-brand)}
+.seg button:focus-visible,.btn:focus-visible,.step:focus-visible{outline:2px solid var(--edit);outline-offset:2px}
+.btn{font:inherit;font-size:13px;border:1px solid var(--line);background:transparent;color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer}
+.btn:hover{border-color:var(--ink)}
+
+/* summary strip */
+.summary{display:grid;grid-template-columns:minmax(220px,1.2fr) repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.summary > div{padding:18px 18px 18px 0;display:flex;flex-direction:column;gap:6px}
+.summary > div + div{padding-left:18px;border-left:1px solid var(--line-soft)}
+.big{font-size:clamp(40px,5vw,56px);font-weight:300;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.mid{font-size:24px;font-weight:300;font-variant-numeric:tabular-nums}
+.small{font-size:12px;color:var(--muted)}
+.up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--flat)}
+
+/* tree */
+.panel-head{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:baseline}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:14px;height:10px;border-radius:3px;display:inline-block}
+.sw.calc{background:var(--tint)} .sw.top{background:var(--brand)} .sw.in{border:1.5px solid var(--edit);background:var(--edit-bg)} .sw.base{border:1px dashed var(--muted)}
+.tree-wrap{overflow-x:auto;background:var(--surface);border-radius:14px;border:1px solid var(--line-soft);-webkit-overflow-scrolling:touch}
+.tree{position:relative;width:1140px;height:860px;margin:20px}
+.tree svg{position:absolute;inset:0;overflow:visible}
+.tree svg path{fill:none;stroke:var(--line);stroke-width:1.2}
+.node{position:absolute;width:170px;height:112px;border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;justify-content:space-between;gap:4px}
+.node .t{font-size:10.5px;line-height:1.25;text-transform:uppercase;letter-spacing:.06em;font-weight:500}
+.node .v{font-size:24px;font-weight:400;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-.01em}
+.node .h{font-size:11px;color:var(--muted);line-height:1.25}
+.node.calc{background:var(--tint)}
+.node.calc .t{color:var(--ink-2)}
+.node.top{background:var(--brand);color:var(--on-brand)}
+.node.top .t,.node.top .h{color:var(--on-brand);opacity:.85}
+.node.top .v{color:var(--on-brand);font-size:30px}
+.node.in{background:var(--edit-bg);border:1.5px solid var(--edit)}
+.node.in .t{color:var(--ink)}
+.node.base{border:1px dashed var(--muted);background:transparent}
+.node.base .t{color:var(--muted)}
+.node.base .v{color:var(--muted);font-size:20px}
+.node.flash{animation:flash .5s ease}
+@keyframes flash{from{box-shadow:0 0 0 3px color-mix(in srgb,var(--edit) 45%,transparent)}to{box-shadow:0 0 0 0 transparent}}
+.field{display:flex;align-items:center;gap:4px}
+.step{width:26px;height:26px;flex:none;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}
+.step:hover{border-color:var(--edit);color:var(--edit)}
+.field input{width:100%;min-width:0;font:inherit;font-size:19px;font-variant-numeric:tabular-nums;text-align:center;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);padding:2px 0;border-radius:0}
+.field input:focus{outline:none;border-bottom-color:var(--edit)}
+.field .u{font-size:13px;color:var(--muted)}
+.sub{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.sub input{width:46px;font:inherit;font-size:12px;text-align:right;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);padding:0}
+.sub input:focus{outline:none;border-bottom-color:var(--edit)}
+.op{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:600;line-height:1;color:var(--ink);background:var(--surface);border:1px solid var(--line-soft);z-index:1}
+.note{font-size:12px;color:var(--muted);max-width:80ch;margin:0}
+
+/* lower grid */
+.lower{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:28px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar-row{display:grid;grid-template-columns:170px 1fr 64px;gap:10px;align-items:center;font-size:13px}
+.bar-row .lbl{color:var(--ink-2)}
+.bar-track{position:relative;height:18px}
+.bar-track .axis{position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--line)}
+.bar-track .b{position:absolute;top:3px;height:12px;border-radius:3px;transition:left .25s,width .25s}
+.bar-row .num{text-align:right;font-variant-numeric:tabular-nums}
+.bar-row.total{border-top:1px solid var(--line-soft);padding-top:8px;font-weight:500}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+th{font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--line)}
+td{padding:8px 10px 8px 0;border-bottom:1px solid var(--line-soft);vertical-align:top}
+td.r,th.r{text-align:right}
+tr.grp td{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding-top:14px}
+.pill{display:inline-block;font-size:10.5px;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.in{border-color:var(--edit);color:var(--edit)}
+/* ownership */
+.own{position:absolute;top:-9px;right:10px;font-size:10px;font-weight:600;letter-spacing:.04em;line-height:1;padding:3px 7px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.node.top .own{border-color:var(--brand);color:var(--ink)}
+.tree.focus .node{opacity:.28;transition:opacity .2s}
+.tree.focus .node.hl{opacity:1}
+.tree.focus .node.hl-main{box-shadow:0 0 0 2px var(--edit)}
+.tree.focus .node.hl-main .own{background:var(--edit);border-color:var(--edit);color:var(--surface)}
+.dept-tbl td{vertical-align:top}
+.dept-tbl tr.dept{cursor:pointer}
+.dept-tbl tr.dept:hover td{background:var(--edit-bg)}
+.dept-tbl tr.dept[aria-selected="true"] td{background:var(--edit-bg)}
+.dept-tbl tr.dept[aria-selected="true"] td:first-child{box-shadow:inset 3px 0 0 var(--edit)}
+.dept-tbl tr.dept:focus-visible{outline:2px solid var(--edit);outline-offset:-2px}
+.code{display:inline-block;min-width:34px;text-align:center;font-size:10px;font-weight:600;padding:3px 6px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2);margin-right:8px}
+.dept-name{font-weight:500}
+.levers{color:var(--ink-2);font-size:12.5px;max-width:48ch}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{font-size:11.5px;padding:2px 8px;border-radius:6px;background:var(--tint);color:var(--ink)}
+.tag.co{background:transparent;border:1px dashed var(--line);color:var(--ink-2)}
+@media (max-width:900px){
+  .summary{grid-template-columns:1fr 1fr}
+  .summary > div:first-child{grid-column:1/-1}
+  .summary > div + div{border-left:0;padding-left:0}
+  .summary > div:nth-child(odd):not(:first-child){padding-left:18px;border-left:1px solid var(--line-soft)}
+  .lower{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .shell{grid-template-columns:1fr}
+  .rail{display:none}
+  .bar-row{grid-template-columns:110px 1fr 56px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="shell">
+  <aside class="rail" aria-hidden="true"><span class="mark">coralclub</span><span class="pg">01</span></aside>
+  <main>
+    <header class="head">
+      <div>
+        <div class="eyebrow">Аналитика · дерево показателей</div>
+        <h1>Дерево продаж: рост в процентах</h1>
+        <p class="lede">Все значения показаны только как рост в процентах, без абсолютных цифр. Меняйте голубые поля, и дерево пересчитает рост каждого показателя вплоть до продаж.</p>
+      </div>
+      <div class="controls">
+        <div class="ctl">
+          <span class="eyebrow">Рост к</span>
+          <div class="seg" role="group" aria-label="База сравнения">
+            <button type="button" id="cmp-mom" data-cmp="mom" aria-pressed="true">пред. месяцу</button>
+            <button type="button" id="cmp-yoy" data-cmp="yoy" aria-pressed="false">прошлому году</button>
+          </div>
+        </div>
+        <div class="ctl">
+          <span class="eyebrow">Сценарий</span>
+          <div class="seg" role="group" aria-label="Сценарий">
+            <button type="button" id="sc-base" data-sc="base" aria-pressed="true">Базовый</button>
+            <button type="button" id="sc-up" data-sc="up" aria-pressed="false">Рост</button>
+            <button type="button" id="sc-stress" data-sc="stress" aria-pressed="false">Стресс</button>
+          </div>
+        </div>
+        <button type="button" class="btn" id="zero">Обнулить</button>
+      </div>
+    </header>
+
+    <section class="summary" aria-label="Итоги">
+      <div><span class="eyebrow">Продажи</span><span class="big" id="s-to">—</span><span class="small" id="s-cmp">к предыдущему месяцу</span></div>
+      <div><span class="eyebrow">Число заказов</span><span class="mid" id="s-orders">—</span></div>
+      <div><span class="eyebrow">Средний заказ</span><span class="mid" id="s-avg">—</span></div>
+      <div><span class="eyebrow">Активные ЧК</span><span class="mid" id="s-active">—</span></div>
+      <div><span class="eyebrow">Дистрибьюторы</span><span class="mid" id="s-dist">—</span></div>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:14px">
+      <div class="panel-head">
+        <h2>Дерево показателей</h2>
+        <div class="legend">
+          <span><i class="sw top"></i>Итог</span>
+          <span><i class="sw calc"></i>Расчётный рост</span>
+          <span><i class="sw in"></i>Вводимый показатель</span>
+          <span><i class="sw base"></i>База = 100%</span>
+        </div>
+      </div>
+      <div class="tree-wrap"><div class="tree" id="tree"><svg id="wires" width="1140" height="860" aria-hidden="true"></svg></div></div>
+      <p class="note">Приток и отток ЧК задаются в % от базы прошлого периода, остальные показатели в % роста. Рост числа ЧК = новые + реактивированные − БЗ12+. Новые ЧК растут вместе с числом дистрибьюторов. Средний заказ = количество клиентов × средняя сумма покупки, где средняя сумма покупки = цена × кол-во штук.</p>
+    </section>
+
+    <section class="card" id="owners" style="gap:16px">
+      <div class="panel-head">
+        <h2>Кто отвечает за показатели</h2>
+        <button type="button" class="btn" id="own-clear" hidden>Показать всё дерево</button>
+      </div>
+      <p class="note" style="margin-top:-6px">Предложение по зонам ответственности. Метка на карточке в дереве означает владельца показателя. Нажмите на департамент, чтобы подсветить его показатели в дереве. Распределение — предложение, согласуйте его с руководителями департаментов.</p>
+      <div class="tbl-wrap"><table class="dept-tbl"><thead><tr><th>Департамент</th><th>Владелец показателей</th><th>Участвует</th><th>Главные рычаги</th></tr></thead><tbody id="dept-body"></tbody></table></div>
+    </section>
+
+    <section class="lower">
+      <div class="card">
+        <div class="panel-head"><h2>Вклад факторов в рост продаж</h2><span class="small">п.п., логарифмический метод</span></div>
+        <div class="bars" id="bars"></div>
+      </div>
+      <div class="card">
+        <div class="panel-head"><h2>Все показатели</h2><span class="small">эффект на продажи при +1 п.п. к показателю</span></div>
+        <div class="tbl-wrap"><table id="tbl"><thead><tr><th>Показатель</th><th>Тип</th><th class="r">Рост</th><th class="r">+1 п.п. → продажи</th></tr></thead><tbody></tbody></table></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+const W=170,H=112;
+const SCEN={
+  base:  {price:3, qty:2, clients:1, repeat:1.5, activity:1, newShare:8, react:3, churn:7, dist:2},
+  up:    {price:4, qty:3, clients:2.5, repeat:3, activity:2.5, newShare:10, react:4, churn:6, dist:5.5},
+  stress:{price:2, qty:-2, clients:-1.5, repeat:-1.5, activity:-2, newShare:6, react:2, churn:9, dist:-2}
+};
+const ZERO={price:0,qty:0,clients:0,repeat:0,activity:0,newShare:0,react:0,churn:0,dist:0};
+let S=Object.assign({},SCEN.base), cmp='mom', scen='base';
+try{const saved=JSON.parse(localStorage.getItem('cc-tree')||'null'); if(saved&&saved.S){S=Object.assign({},SCEN.base,saved.S);cmp=saved.cmp||'mom';scen=saved.scen||'';}}catch(e){}
+
+const N=[
+ {id:'to',t:'Продажи',x:487,y:0,k:'top'},
+ {id:'orders',t:'Число заказов',x:220,y:148,k:'calc'},
+ {id:'avg',t:'Средний заказ',x:752,y:148,k:'calc'},
+ {id:'active',t:'Число активных',x:110,y:296,k:'calc'},
+ {id:'repeat',t:'Коэф. повторных заказов в рамках 1 мес.',x:330,y:296,k:'in',unit:'%',h:'рост к базе'},
+ {id:'clients',t:'Количество клиентов',x:650,y:296,k:'in',unit:'%',h:'рост к базе'},
+ {id:'avgBuy',t:'Средняя сумма покупки',x:855,y:296,k:'calc'},
+ {id:'ck',t:'Число ЧК',x:0,y:444,k:'calc'},
+ {id:'activity',t:'% активности',x:220,y:444,k:'in',unit:'%',h:'рост доли активных'},
+ {id:'price',t:'Цена за штуку',x:750,y:444,k:'in',unit:'%',h:'рост к базе'},
+ {id:'qty',t:'Кол-во штук в заказе',x:960,y:444,k:'in',unit:'%',h:'рост к базе'},
+ {id:'ckBase',t:'ЧК предыдущего периода',x:0,y:592,k:'base'},
+ {id:'newck',t:'Новые ЧК',x:220,y:592,k:'calc'},
+ {id:'react',t:'Реактивированные ЧК',x:440,y:592,k:'in',unit:'%',h:'% от базы ЧК'},
+ {id:'churn',t:'БЗ12+',x:660,y:592,k:'in',unit:'%',h:'% от базы ЧК, уход'},
+ {id:'dist',t:'Число дистрибьюторов',x:220,y:740,k:'in',unit:'%',h:'рост к базе'}
+];
+const E=[['to','orders'],['to','avg'],['orders','active'],['orders','repeat'],['avg','clients'],['avg','avgBuy'],['avgBuy','price'],['avgBuy','qty'],
+ ['active','ck'],['active','activity'],['ck','ckBase'],['ck','newck'],['ck','react'],['ck','churn'],['newck','dist']];
+const OPS=[['orders','avg','×'],['active','repeat','×'],['clients','avgBuy','×'],['price','qty','×'],['ck','activity','×'],
+ ['ckBase','newck','+'],['newck','react','+'],['react','churn','−']];
+const byId=Object.fromEntries(N.map(n=>[n.id,n]));
+const DEPT={
+ 'ДПД':{name:'Департамент поддержки дистрибьюторов (отдел продаж)',lev:'План продаж по регионам, работа с лидерами и структурами, привлечение новых дистрибьюторов, рекрутинг, число клиентов в заказе, возврат ушедших.'},
+ 'ОБ':{name:'Департамент обучения',lev:'Онбординг новых дистрибьюторов, школа продукта и продаж, обучение рекрутингу и работе с клиентами, наставничество.'},
+ 'МК':{name:'Маркетинг',lev:'Цены и ассортимент, промо «купи 2», комплекты и курсы приёма, акции месяца, новинки: рост средней суммы покупки.'},
+ 'КМ':{name:'Коммуникация',lev:'Рассылки и напоминания о повторном заказе, контент для активности ЧК, реактивационные кампании для «спящих» и БЗ12+.'},
+ 'ОП':{name:'Операционный отдел',lev:'Обработка заказов, наличие товара, регламенты и данные для отчётности по дереву, план-факт.'},
+ 'ЛГ':{name:'Логистика',lev:'Сроки и стоимость доставки, пункты выдачи, сохранность заказа: влияет на повторные заказы и отток.'},
+ 'ДП':{name:'Департамент признаний',lev:'Квалификации, награды и мотивационные программы: удержание дистрибьюторов, активность рекрутеров и новых партнёров.'},
+ 'IT':{name:'IT-отдел',lev:'Техническая база реферальных ссылок, личный кабинет и приложение, данные для расчёта показателей.'},
+ 'EC':{name:'E-com',lev:'Интернет-магазин и приложение, реферальная программа для ЧК-рекомендателей, рекомендации в корзине, удобный повторный заказ.'}
+};
+const OWN={to:'ДПД',orders:'ДПД',avg:'МК',active:'ДПД',repeat:'EC',clients:'ДПД',avgBuy:'МК',price:'МК',qty:'МК',ck:'ДПД',activity:'КМ',newck:'ДПД',react:'КМ',churn:'КМ',dist:'ДПД'};
+const CO={to:['ОП'],orders:['EC','ОП'],avg:['EC'],active:['КМ'],repeat:['ЛГ','IT'],clients:['ОБ'],avgBuy:['EC'],price:['ОП'],qty:['EC','ОБ'],ck:['КМ'],activity:['EC','ДП'],newck:['ОБ'],react:['МК','ДПД'],churn:['ДПД','ЛГ'],dist:['ОБ','ДП']};
+
+const tree=document.getElementById('tree'), svg=document.getElementById('wires');
+// wires
+let d='';
+E.forEach(([p,c])=>{const P=byId[p],C=byId[c];const px=P.x+W/2,py=P.y+H,cx=C.x+W/2,cy=C.y;const my=cy-18;
+  d+=`M${px},${py}V${my}H${cx}V${cy}`;});
+svg.innerHTML=`<path d="${d}"/>`;
+OPS.forEach(([a,b,s])=>{const A=byId[a],B=byId[b];const o=document.createElement('div');o.className='op';o.textContent=s;
+  o.style.left=((A.x+W+B.x)/2)+'px';o.style.top=(A.y+H/2)+'px';tree.appendChild(o);});
+
+const fmt=(v,dec=1)=>{if(!isFinite(v))return '—';const r=Math.round(v*Math.pow(10,dec))/Math.pow(10,dec);const s=Math.abs(r).toFixed(dec).replace('.',',');return (r>0?'+':r<0?'−':'')+s+' %';};
+const fmtPP=(v)=>{const r=Math.round(v*100)/100;const s=Math.abs(r).toFixed(2).replace('.',',');return (r>0?'+':r<0?'−':'')+s;};
+const cls=v=>Math.abs(v)<0.05?'flat':v>0?'up':'down';
+
+const els={};
+N.forEach(n=>{
+  const el=document.createElement('div');el.className='node '+n.k;el.style.left=n.x+'px';el.style.top=n.y+'px';el.id='n-'+n.id;
+  if(n.k==='in'){
+    el.innerHTML=`<div class="t">${n.t}</div>
+      <div class="field"><button type="button" class="step" aria-label="Уменьшить: ${n.t}" data-d="-0.5">−</button>
+      <input id="in-${n.id}" inputmode="decimal" aria-label="${n.t}, ${n.h}"><span class="u">%</span>
+      <button type="button" class="step" aria-label="Увеличить: ${n.t}" data-d="0.5">+</button></div>
+      <div class="h">${n.h}</div>`;
+  }else if(n.k==='base'){
+    el.innerHTML=`<div class="t">${n.t}</div><div class="v">100 %</div><div class="h">база сравнения</div>`;
+  }else if(n.id==='newck'){
+    el.innerHTML=`<div class="t">${n.t}</div><div class="v" id="v-newck">—</div>
+      <div class="sub"><label for="in-newShare">приток, % базы ЧК</label><input id="in-newShare" inputmode="decimal"></div>`;
+  }else{
+    el.innerHTML=`<div class="t">${n.t}</div><div class="v" id="v-${n.id}">—</div><div class="h" id="h-${n.id}"></div>`;
+  }
+  if(OWN[n.id]){const c=document.createElement('span');c.className='own';c.textContent=OWN[n.id];c.title=DEPT[OWN[n.id]].name;el.appendChild(c);}
+  tree.appendChild(el);els[n.id]=el;
+});
+
+const INPUTS=['price','qty','clients','repeat','activity','newShare','react','churn','dist'];
+function parse(s){const v=parseFloat(String(s).replace(',','.').replace('−','-').replace(/[^\d.\-]/g,''));return isFinite(v)?v:0;}
+function show(k){const i=document.getElementById('in-'+k);if(i&&document.activeElement!==i)i.value=String(+S[k].toFixed(2)).replace('.',',');}
+
+function model(s){
+  const g=k=>s[k]/100;
+  const dist=g('dist');
+  const newckG=dist;
+  const nShare=g('newShare')*(1+newckG);
+  const ck=nShare+g('react')-g('churn');
+  const active=(1+ck)*(1+g('activity'))-1;
+  const orders=(1+active)*(1+g('repeat'))-1;
+  const avgBuy=(1+g('price'))*(1+g('qty'))-1;
+  const avg=(1+g('clients'))*(1+avgBuy)-1;
+  const to=(1+orders)*(1+avg)-1;
+  return {dist,newckG,nShare,ck,active,orders,avgBuy,avg,to};
+}
+
+function render(flashId){
+  const m=model(S);
+  const set=(id,v,h)=>{const e=document.getElementById('v-'+id);if(e){e.textContent=fmt(v*100);e.className='v '+(id==='to'?'':cls(v*100));}
+    const hh=document.getElementById('h-'+id);if(hh&&h!==undefined)hh.textContent=h;};
+  set('to',m.to,'заказы × средний заказ');
+  set('orders',m.orders,'активные ЧК × повторность');
+  set('avg',m.avg,'клиенты × средняя сумма покупки');
+  set('avgBuy',m.avgBuy,'цена × штук в заказе');
+  set('active',m.active,'ЧК × % активности');
+  set('ck',m.ck,'база + новые + реактив. − БЗ12+');
+  set('newck',m.newckG);
+  INPUTS.forEach(show);
+  // summary
+  const put=(id,v)=>{const e=document.getElementById(id);e.textContent=fmt(v*100);e.className=e.className.replace(/ ?(up|down|flat)/g,'')+' '+cls(v*100);};
+  put('s-to',m.to);put('s-orders',m.orders);put('s-avg',m.avg);put('s-active',m.active);put('s-dist',m.dist);
+  document.getElementById('s-cmp').textContent=cmp==='mom'?'к предыдущему месяцу':'к аналогичному месяцу прошлого года';
+  document.querySelectorAll('[data-cmp]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.cmp===cmp));
+  document.querySelectorAll('[data-sc]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.sc===scen));
+  bars(m);table(m);
+  if(flashId&&els[flashId]){[flashId].forEach(()=>{});}
+  try{localStorage.setItem('cc-tree',JSON.stringify({S,cmp,scen}));}catch(e){}
+}
+
+function bars(m){
+  const L=Math.log(1+m.to);
+  const share=x=>Math.abs(L)<1e-9?0:(m.to*100)*Math.log(1+x)/L;
+  const ckC=share(m.ck);
+  const lin=m.nShare+S.react/100+S.churn/100;
+  const part=v=>Math.abs(m.ck)<1e-9||lin===0?0:ckC*v/(m.ck);
+  // split Число ЧК contribution proportionally by linear parts (they sum to m.ck)
+  const rows=[
+    ['Цена за штуку',share(S.price/100)],
+    ['Штук в заказе',share(S.qty/100)],
+    ['Количество клиентов',share(S.clients/100)],
+    ['Повторные заказы',share(S.repeat/100)],
+    ['% активности',share(S.activity/100)],
+    ['Новые ЧК',part(m.nShare)],
+    ['Реактивация',part(S.react/100)],
+    ['БЗ12+',part(-S.churn/100)]
+  ];
+  const max=Math.max(1,...rows.map(r=>Math.abs(r[1])));
+  const hasNeg=rows.some(r=>r[1]<-0.005);
+  const zero=hasNeg?50:0, span=hasNeg?50:100;
+  const html=rows.map(([l,v])=>{const w=Math.abs(v)/max*span;const left=v>=0?zero:zero-w;
+    return `<div class="bar-row"><span class="lbl">${l}</span><div class="bar-track"><span class="axis" style="left:${zero}%"></span><span class="b" style="left:${left}%;width:${w}%;background:var(${v>=0?'--up-bar':'--down-bar'})"></span></div><span class="num ${cls(v)}">${fmtPP(v)}</span></div>`;}).join('');
+  document.getElementById('bars').innerHTML=html+`<div class="bar-row total"><span class="lbl">Рост продаж</span><span></span><span class="num ${cls(m.to*100)}">${fmtPP(m.to*100)}</span></div>`;
+}
+
+const ROWS=[
+ ['grp','Итог'],
+ ['c','Продажи',m=>m.to],
+ ['grp','Число заказов'],
+ ['c','Число заказов',m=>m.orders],
+ ['c','Число активных',m=>m.active],
+ ['i','Коэф. повторных заказов','repeat'],
+ ['c','Число ЧК',m=>m.ck],
+ ['i','% активности','activity'],
+ ['c','Новые ЧК, рост',m=>m.newckG],
+ ['i','Новые ЧК, приток % базы','newShare'],
+ ['i','Число дистрибьюторов','dist'],
+ ['i','Реактивированные ЧК, % базы','react'],
+ ['i','БЗ12+, % базы','churn'],
+ ['grp','Средний заказ'],
+ ['c','Средний заказ',m=>m.avg],
+ ['i','Количество клиентов','clients'],
+ ['c','Средняя сумма покупки',m=>m.avgBuy],
+ ['i','Цена за штуку','price'],
+ ['i','Кол-во штук в заказе','qty']
+];
+function table(m){
+  const tb=document.querySelector('#tbl tbody');
+  tb.innerHTML=ROWS.map(r=>{
+    if(r[0]==='grp')return `<tr class="grp"><td colspan="4">${r[1]}</td></tr>`;
+    if(r[0]==='c'){const v=r[2](m)*100;return `<tr><td>${r[1]}</td><td><span class="pill">расчёт</span></td><td class="r ${cls(v)}">${fmt(v)}</td><td class="r small">—</td></tr>`;}
+    const k=r[2],v=S[k];const t=Object.assign({},S);t[k]=v+1;const eff=(model(t).to-m.to)*100;
+    return `<tr><td>${r[1]}</td><td><span class="pill in">ввод</span></td><td class="r">${fmt(v)}</td><td class="r ${cls(eff)}">${fmtPP(eff)} п.п.</td></tr>`;
+  }).join('');
+}
+
+// events
+INPUTS.forEach(k=>{
+  const i=document.getElementById('in-'+k);
+  i.addEventListener('input',()=>{S[k]=parse(i.value);scen='';render();});
+  i.addEventListener('blur',()=>show(k));
+  i.addEventListener('keydown',e=>{if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();S[k]=+(S[k]+(e.key==='ArrowUp'?0.1:-0.1)).toFixed(2);scen='';i.value=String(S[k]).replace('.',',');render();}});
+});
+tree.addEventListener('click',e=>{const b=e.target.closest('.step');if(!b)return;const node=b.closest('.node');const k=node.id.slice(2);
+  S[k]=+(S[k]+parseFloat(b.dataset.d)).toFixed(2);scen='';render();node.classList.remove('flash');void node.offsetWidth;node.classList.add('flash');});
+document.querySelectorAll('[data-cmp]').forEach(b=>b.addEventListener('click',()=>{cmp=b.dataset.cmp;render();}));
+document.querySelectorAll('[data-sc]').forEach(b=>b.addEventListener('click',()=>{scen=b.dataset.sc;S=Object.assign({},SCEN[scen]);render();}));
+document.getElementById('zero').addEventListener('click',()=>{S=Object.assign({},ZERO);scen='';render();});
+// ownership table
+const ORDER=['ДПД','ОБ','МК','КМ','ОП','ЛГ','ДП','IT','EC'];
+const nm=id=>byId[id].t.replace(/ в рамках 1 мес\./,'');
+const body=document.getElementById('dept-body');
+body.innerHTML=ORDER.map(code=>{
+  const own=Object.keys(OWN).filter(k=>OWN[k]===code);
+  const co=Object.keys(CO).filter(k=>CO[k].includes(code));
+  const tags=(a,c)=>a.length?`<div class="tags">${a.map(k=>`<span class="tag${c}">${nm(k)}</span>`).join('')}</div>`:'<span class="small">—</span>';
+  return `<tr class="dept" tabindex="0" data-code="${code}" aria-selected="false"><td><span class="code">${code}</span><span class="dept-name">${DEPT[code].name}</span></td><td>${tags(own,'')}</td><td>${tags(co,' co')}</td><td class="levers">${DEPT[code].lev}</td></tr>`;
+}).join('');
+let sel='';
+function focusDept(code){
+  sel=sel===code?'':code;
+  tree.classList.toggle('focus',!!sel);
+  N.forEach(n=>{const main=sel&&OWN[n.id]===sel, co=sel&&(CO[n.id]||[]).includes(sel);
+    els[n.id].classList.toggle('hl',!!(main||co));els[n.id].classList.toggle('hl-main',!!main);});
+  body.querySelectorAll('tr.dept').forEach(r=>r.setAttribute('aria-selected',r.dataset.code===sel));
+  document.getElementById('own-clear').hidden=!sel;
+  if(sel)document.querySelector('.tree-wrap').scrollIntoView({behavior:'smooth',block:'start'});
+}
+body.addEventListener('click',e=>{const r=e.target.closest('tr.dept');if(r)focusDept(r.dataset.code);});
+body.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('tr.dept')){e.preventDefault();focusDept(e.target.dataset.code);}});
+document.getElementById('own-clear').addEventListener('click',()=>{sel&&focusDept(sel);});
+render();
+})();
+</script>
+
+</body></html>
